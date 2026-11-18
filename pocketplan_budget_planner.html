@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PocketPlan — Monthly Budget Planner</title>
+<style>
+:root{--ink:#17252b;--muted:#78868a;--bg:#f3f6f3;--white:#fff;--green:#246b53;--mint:#dff2e6;--lime:#c9f36a;--line:#e7ede8;--orange:#f0a56b;--red:#d96c67;--blue:#7896e8;--shadow:0 12px 35px #1a39200c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}button,input,select{font:inherit}button{cursor:pointer;border:0}
+.app{max-width:1440px;margin:auto;min-height:100vh;display:grid;grid-template-columns:230px 1fr}.side{background:#17352f;color:white;padding:28px 18px;display:flex;flex-direction:column}.logo{font-weight:850;font-size:21px;letter-spacing:-.8px;display:flex;align-items:center;gap:10px;padding:0 9px}.logo-mark{width:34px;height:34px;border-radius:11px;background:var(--lime);color:#17352f;display:grid;place-items:center;font-size:20px}.side-label{font-size:10px;color:#9bb5a9;font-weight:800;letter-spacing:1.5px;margin:38px 12px 10px}.nav{display:grid;gap:5px}.nav a{color:#c1d0c8;text-decoration:none;padding:11px 12px;border-radius:10px;display:flex;gap:12px}.nav a.active,.nav a:hover{background:#2b4a41;color:#fff}.nav span{width:18px}.side-note{margin-top:auto;border:1px solid #466257;background:#22443a;border-radius:14px;padding:15px}.side-note b{font-size:12px}.side-note p{font-size:10px;color:#c0d0c7;margin:6px 0 0}.main{padding:30px 34px 42px;min-width:0}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.eyebrow{font-size:10px;letter-spacing:1.4px;color:var(--muted);font-weight:800}.top h1{font-size:25px;letter-spacing:-1px;margin:3px 0}.month{border:1px solid var(--line);background:white;border-radius:10px;padding:9px 13px;color:#53625e;font-size:12px}
+.hero{background:#17352f;border-radius:21px;color:white;padding:25px 27px;display:grid;grid-template-columns:1.15fr 1fr;gap:20px;position:relative;overflow:hidden;box-shadow:var(--shadow)}.hero:after{content:"";position:absolute;width:290px;height:290px;border:1px solid #557166;border-radius:50%;right:20%;top:-220px;box-shadow:0 0 0 35px #ffffff08,0 0 0 70px #ffffff05}.hero-tag{color:var(--lime);font-size:10px;font-weight:800;letter-spacing:1.7px}.hero h2{font-size:31px;line-height:1.15;letter-spacing:-1.1px;margin:9px 0}.hero p{color:#b9cbc1;font-size:12px;margin:0}.hero-total{z-index:1;background:#24483d;border:1px solid #45675a;border-radius:15px;padding:17px;align-self:center}.hero-total small{color:#bdd0c5;font-size:11px}.hero-total strong{font-size:31px;letter-spacing:-1px;display:block;margin:5px 0}.hero-total em{font-size:10px;color:var(--lime);font-style:normal}.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:16px 0}.card{background:var(--white);border:1px solid var(--line);border-radius:15px;padding:17px;box-shadow:var(--shadow);min-width:0}.metric-label{font-size:10px;color:var(--muted);font-weight:750;display:flex;justify-content:space-between;align-items:center}.metric-icon{width:28px;height:28px;border-radius:9px;background:#edf6ee;display:grid;place-items:center;color:var(--green);font-size:14px}.metric strong{font-size:22px;display:block;margin:8px 0 1px;letter-spacing:-.6px}.metric small{font-size:10px;color:var(--muted)}.layout{display:grid;grid-template-columns:1.1fr .9fr;gap:14px;margin-bottom:14px}.section-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.section-title h3{font-size:14px;margin:0}.section-title span{font-size:10px;color:var(--muted)}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.field{display:grid;gap:5px}.field label{font-size:10px;color:#718079;font-weight:800;letter-spacing:.5px}.field input,.field select{width:100%;padding:11px 12px;border:1px solid #e2eae4;border-radius:9px;background:#fbfdfb;color:var(--ink);outline:none}.field input:focus,.field select:focus{border-color:#8db59a;box-shadow:0 0 0 3px #dff2e6}.full{grid-column:1/-1}.btn{border-radius:9px;padding:11px 14px;font-size:11px;font-weight:800}.btn.primary{background:var(--green);color:white}.btn.light{background:#edf5e9;color:#28563f}.btn:hover{filter:brightness(.97)}.form-actions{display:flex;gap:8px;margin-top:13px;flex-wrap:wrap}.expense-list{display:grid;gap:9px;max-height:310px;overflow:auto}.expense-item{display:grid;grid-template-columns:34px 1fr auto;gap:9px;align-items:center;padding:9px 0;border-bottom:1px solid #f0f3f0}.expense-icon{width:32px;height:32px;border-radius:10px;background:#f1f5ef;display:grid;place-items:center}.expense-item b{font-size:11px;display:block}.expense-item small{font-size:9px;color:var(--muted)}.expense-item strong{font-size:11px}.delete{background:transparent;color:#9ba6a0;font-size:15px;padding:4px}.delete:hover{color:var(--red)}.empty{font-size:11px;color:var(--muted);padding:18px;text-align:center;background:#f8faf8;border-radius:10px}
+.breakdown{display:grid;gap:13px}.bar-row{display:grid;grid-template-columns:1fr auto;gap:5px}.bar-row b{font-size:11px}.bar-row small{font-size:10px;color:var(--muted)}.track{grid-column:1/-1;height:8px;border-radius:20px;background:#edf1ed;overflow:hidden}.track span{display:block;height:100%;border-radius:20px;background:var(--green);transition:width .3s}.track span.warn{background:var(--orange)}.track span.over{background:var(--red)}.rule{background:#f4f8ed;border:1px solid #e6eedb;border-radius:12px;padding:13px;margin-top:15px}.rule b{font-size:11px}.rule p{font-size:10px;color:#6d7b70;margin:4px 0 0}.bottom{display:grid;grid-template-columns:1fr 1fr;gap:14px}.donut-wrap{display:flex;align-items:center;gap:20px}.donut{width:135px;height:135px;border-radius:50%;background:conic-gradient(var(--green) 0 50%,var(--lime) 50% 80%,var(--orange) 80% 100%);display:grid;place-items:center;flex:none;position:relative}.donut:before{content:"";position:absolute;width:89px;height:89px;border-radius:50%;background:white}.donut-center{position:relative;text-align:center}.donut-center b{font-size:18px;display:block}.donut-center small{font-size:9px;color:var(--muted)}.legend{display:grid;gap:9px;flex:1}.legend div{display:flex;justify-content:space-between;font-size:10px;gap:8px}.legend span{color:var(--muted)}.swatch{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px}.tip{background:#f5f8f3;border-radius:12px;padding:14px;margin-bottom:9px}.tip b{font-size:11px;display:block}.tip p{font-size:10px;color:#738078;margin:4px 0 0}.tip:last-child{margin:0}.footer{text-align:center;color:#9aa69e;font-size:9px;padding:23px 0 0}
+.toast{position:fixed;bottom:20px;right:20px;background:#17352f;color:white;padding:12px 16px;border-radius:10px;font-size:11px;display:none;box-shadow:var(--shadow)}
+@media(max-width:950px){.app{grid-template-columns:190px 1fr}.main{padding:24px 20px}.cards{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){.app{display:block}.side{padding:14px 16px;display:block}.side-label,.nav,.side-note{display:none}.main{padding:20px 13px}.top h1{font-size:21px}.hero{grid-template-columns:1fr;padding:21px}.hero h2{font-size:27px}.hero-total strong{font-size:27px}.layout,.bottom{grid-template-columns:1fr}.cards{gap:8px}.card{padding:14px}.metric strong{font-size:19px}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.donut-wrap{gap:12px}.donut{width:115px;height:115px}.donut:before{width:76px;height:76px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="side">
+ <div class="logo"><div class="logo-mark">P</div>pocketplan<span style="color:var(--lime)">.</span></div>
+ <div class="side-label">YOUR MONEY</div>
+ <nav class="nav">
+  <a class="active" href="#overview"><span>▦</span>Overview</a>
+  <a href="#income"><span>↗</span>Income & expenses</a>
+  <a href="#breakdown"><span>◫</span>Budget breakdown</a>
+  <a href="#insights"><span>✧</span>Smart suggestions</a>
+ </nav>
+ <div class="side-note"><b>Small steps. Strong savings.</b><p>A simple monthly plan helps you understand where your money goes and what you can save.</p></div>
+</aside>
+<main class="main" id="overview">
+ <header class="top"><div><div class="eyebrow">PERSONAL FINANCE DASHBOARD</div><h1>Your monthly money plan</h1></div><div class="month" id="monthLabel">◷ This month</div></header>
+ <section class="hero">
+  <div><div class="hero-tag">PLAN IT. TRACK IT. SAVE IT.</div><h2>Give every rupee<br>a destination.</h2><p>Enter your income and expenses. PocketPlan will do the maths and show you what's left.</p></div>
+  <div class="hero-total"><small>YOUR ESTIMATED SAVINGS</small><strong id="heroSavings">₹0</strong><em id="heroMessage">Add your income and expenses to get started</em></div>
+ </section>
+ <section class="cards">
+  <div class="card metric"><div class="metric-label">MONTHLY INCOME <span class="metric-icon">↗</span></div><strong id="incomeMetric">₹0</strong><small>Your total take-home income</small></div>
+  <div class="card metric"><div class="metric-label">TOTAL EXPENSES <span class="metric-icon" style="background:#fff2e8;color:#b87540">↘</span></div><strong id="expenseMetric">₹0</strong><small>All planned spending</small></div>
+  <div class="card metric"><div class="metric-label">SAVINGS LEFT <span class="metric-icon">◎</span></div><strong id="savingMetric">₹0</strong><small>Income minus expenses</small></div>
+  <div class="card metric"><div class="metric-label">SAVINGS RATE <span class="metric-icon" style="background:#eef1ff;color:#657bd1">%</span></div><strong id="rateMetric">0%</strong><small>Share of income saved</small></div>
+ </section>
+ <section class="layout" id="income">
+  <div class="card">
+   <div class="section-title"><h3>Build your monthly plan</h3><span>Enter your numbers</span></div>
+   <div class="form-grid">
+    <div class="field full"><label>MONTHLY SALARY / INCOME (₹)</label><input id="incomeInput" type="number" min="0" placeholder="e.g. 30000" value="30000"></div>
+    <div class="field"><label>RENT / HOME (₹)</label><input class="expense-input" data-name="Rent / Home" type="number" min="0" value="7000"></div>
+    <div class="field"><label>FOOD & GROCERIES (₹)</label><input class="expense-input" data-name="Food & groceries" type="number" min="0" value="4500"></div>
+    <div class="field"><label>TRANSPORT (₹)</label><input class="expense-input" data-name="Transport" type="number" min="0" value="2000"></div>
+    <div class="field"><label>BILLS & UTILITIES (₹)</label><input class="expense-input" data-name="Bills & utilities" type="number" min="0" value="1800"></div>
+    <div class="field"><label>SHOPPING & PERSONAL (₹)</label><input class="expense-input" data-name="Shopping & personal" type="number" min="0" value="1500"></div>
+    <div class="field"><label>OTHER EXPENSES (₹)</label><input class="expense-input" data-name="Other expenses" type="number" min="0" value="1000"></div>
+    <div class="field full"><label>EXTRA EXPENSE NAME (OPTIONAL)</label><input id="extraName" type="text" placeholder="e.g. Gym, subscriptions, education"></div>
+    <div class="field full"><label>EXTRA EXPENSE AMOUNT (₹)</label><input id="extraAmount" type="number" min="0" placeholder="0" value="0"></div>
+   </div>
+   <div class="form-actions"><button class="btn primary" onclick="calculate()">Calculate my budget ↗</button><button class="btn light" onclick="resetPlan()">Reset sample</button></div>
+  </div>
+  <div class="card" id="breakdown">
+   <div class="section-title"><h3>Expense breakdown</h3><span id="expenseCount">6 categories</span></div>
+   <div class="breakdown" id="breakdownList"></div>
+   <div class="rule"><b>💡 The 50 / 30 / 20 guideline</b><p>A common budgeting guide: around 50% for needs, 30% for wants and 20% for savings. Adjust it to suit your situation.</p></div>
+  </div>
+ </section>
+ <section class="bottom">
+  <div class="card"><div class="section-title"><h3>Where your income goes</h3><span>Monthly view</span></div><div class="donut-wrap"><div class="donut" id="donut"><div class="donut-center"><b id="donutPercent">0%</b><small>SPENT</small></div></div><div class="legend" id="legend"><div><span><i class="swatch" style="background:var(--green)"></i>Expenses</span><b>₹0</b></div><div><span><i class="swatch" style="background:var(--lime)"></i>Savings</span><b>₹0</b></div></div></div></div>
+  <div class="card" id="insights"><div class="section-title"><h3>Your budget insights</h3><span>Live analysis ✧</span></div><div id="insightsList"><div class="tip"><b>Start with your income</b><p>Enter your monthly income and expenses to receive useful suggestions.</p></div></div></div>
+ </section>
+ <div class="footer">POCKETPLAN · A practical Applied Mathematics project · Calculations use the values you enter</div>
+</main>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const fmt=n=>'₹'+Math.round(n).toLocaleString('en-IN');
+const inputs=[...document.querySelectorAll('.expense-input')];
+function getData(){let income=Math.max(0,Number(document.getElementById('incomeInput').value)||0),items=inputs.map(i=>({name:i.dataset.name,value:Math.max(0,Number(i.value)||0)}));let extraName=document.getElementById('extraName').value.trim(),extra=Math.max(0,Number(document.getElementById('extraAmount').value)||0);if(extra>0)items.push({name:extraName||'Extra expense',value:extra});let expenses=items.reduce((s,x)=>s+x.value,0);return{income,items,expenses,savings:income-expenses,rate:income?((income-expenses)/income)*100:0}}
+function calculate(){let d=getData();document.getElementById('incomeMetric').textContent=fmt(d.income);document.getElementById('expenseMetric').textContent=fmt(d.expenses);document.getElementById('savingMetric').textContent=fmt(d.savings);document.getElementById('rateMetric').textContent=(Math.round(d.rate*10)/10)+'%';document.getElementById('heroSavings').textContent=fmt(d.savings);let msg=d.savings<0?'Your expenses are higher than your income':d.savings===0?'Your full income is allocated':'You have money left after expenses';document.getElementById('heroMessage').textContent=msg;document.getElementById('heroSavings').style.color=d.savings<0?'#ffb0a7':'var(--lime)';
+let colors=['#246b53','#c9f36a','#f0a56b','#7896e8','#b7c9bf','#d9a6c7','#8ba5ad'];let max=d.income||d.expenses||1;document.getElementById('breakdownList').innerHTML=d.items.map((x,i)=>`<div class="bar-row"><b>${escapeHtml(x.name)}</b><small>${fmt(x.value)} · ${d.income?Math.round(x.value/d.income*100):Math.round(x.value/max*100)}%</small><div class="track"><span class="${x.value>d.income?'over':x.value>d.income*.25?'warn':''}" style="width:${Math.min(100,x.value/max*100)}%;background:${colors[i%colors.length]}"></span></div></div>`).join('');document.getElementById('expenseCount').textContent=d.items.length+' categories';
+let spentPct=d.income?Math.max(0,Math.min(100,d.expenses/d.income*100)):100,savedPct=d.income?Math.max(0,Math.min(100,d.savings/d.income*100)):0;document.getElementById('donut').style.background=`conic-gradient(var(--green) 0 ${spentPct}%,var(--lime) ${spentPct}% 100%)`;document.getElementById('donutPercent').textContent=Math.round(spentPct)+'%';document.getElementById('legend').innerHTML=`<div><span><i class="swatch" style="background:var(--green)"></i>Expenses</span><b>${fmt(d.expenses)}</b></div><div><span><i class="swatch" style="background:var(--lime)"></i>Savings</span><b>${fmt(Math.max(0,d.savings))}</b></div><div><span><i class="swatch" style="background:var(--orange)"></i>Over budget</span><b>${fmt(Math.max(0,-d.savings))}</b></div>`;
+let tips=[];if(d.income<=0)tips.push(['Add your income','Enter a monthly salary or income above to calculate your budget.']);else if(d.savings<0)tips.push(['Expenses exceed income','You are over budget by '+fmt(-d.savings)+'. Review flexible spending or adjust your plan.']);else{tips.push([d.rate>=20?'Great savings progress':'Build your savings habit',`You are saving ${Math.round(d.rate*10)/10}% of your income. A 20% savings target is a useful starting guideline.`]);if(d.rate>0)tips.push(['Your monthly saving potential',`If you keep this plan for 12 months, you could save ${fmt(d.savings*12)}.`]);else tips.push(['No money left unallocated','Try reducing one or two flexible expense categories to create a savings buffer.']);}let largest=[...d.items].sort((a,b)=>b.value-a.value)[0];if(largest&&largest.value>0)tips.push(['Largest expense: '+largest.name,`This category uses ${d.income?Math.round(largest.value/d.income*100):0}% of your income.`]);document.getElementById('insightsList').innerHTML=tips.map(t=>`<div class="tip"><b>${t[0]}</b><p>${t[1]}</p></div>`).join('');}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function resetPlan(){document.getElementById('incomeInput').value=30000;let vals=[7000,4500,2000,1800,1500,1000];inputs.forEach((i,n)=>i.value=vals[n]);document.getElementById('extraName').value='';document.getElementById('extraAmount').value=0;calculate();toast('Sample budget restored.')}
+function toast(s){let t=document.getElementById('toast');t.textContent=s;t.style.display='block';setTimeout(()=>t.style.display='none',2200)}
+document.querySelectorAll('input').forEach(i=>i.addEventListener('input',calculate));
+document.getElementById('monthLabel').textContent='◷ '+new Date().toLocaleDateString('en-IN',{month:'long',year:'numeric'});
+calculate();
+</script>
+</body></html>
